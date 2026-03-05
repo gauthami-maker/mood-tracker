@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ─────────────────────────────────────────────── */
+@font-face {
+  font-family: "Sora";
+  src: url("/assets/fonts/Sora[wght].woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/assets/fonts/Outfit[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* Dark-only theme — near-black base with pink/magenta accent */
+    --background: 0.08 0 0;
+    --foreground: 0.97 0 0;
+    --card: 0.12 0 0;
+    --card-foreground: 0.97 0 0;
+    --popover: 0.14 0 0;
+    --popover-foreground: 0.97 0 0;
+    --primary: 0.56 0.26 350;
+    --primary-foreground: 0.97 0 0;
+    --secondary: 0.18 0 0;
+    --secondary-foreground: 0.85 0 0;
+    --muted: 0.18 0 0;
+    --muted-foreground: 0.52 0 0;
+    --accent: 0.56 0.26 350;
+    --accent-foreground: 0.97 0 0;
+    --destructive: 0.65 0.22 25;
+    --destructive-foreground: 0.97 0 0;
+    --border: 0.22 0 0;
+    --input: 0.22 0 0;
+    --ring: 0.56 0.26 350;
+
+    /* Pink/magenta accent raw values */
+    --pink: 0.56 0.26 350;
+    --pink-glow: oklch(0.56 0.26 350);
+    --pink-dim: oklch(0.56 0.26 350 / 0.15);
+    --pink-border: oklch(0.56 0.26 350 / 0.5);
+
+    --chart-1: 0.56 0.26 350;
+    --chart-2: 0.65 0.18 280;
+    --chart-3: 0.72 0.14 200;
+    --chart-4: 0.78 0.18 80;
+    --chart-5: 0.6 0.22 30;
+
+    --sidebar: 0.10 0 0;
+    --sidebar-foreground: 0.97 0 0;
+    --sidebar-primary: 0.56 0.26 350;
+    --sidebar-primary-foreground: 0.97 0 0;
+    --sidebar-accent: 0.18 0 0;
+    --sidebar-accent-foreground: 0.85 0 0;
+    --sidebar-border: 0.22 0 0;
+    --sidebar-ring: 0.56 0.26 350;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+/* ─── Keyframes ────────────────────────────────────────── */
+@keyframes pink-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 12px oklch(0.56 0.26 350 / 0.5),
+      0 0 32px oklch(0.56 0.26 350 / 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 20px oklch(0.56 0.26 350 / 0.8),
+      0 0 60px oklch(0.56 0.26 350 / 0.4);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+/* ─── Utility classes ───────────────────────────────────── */
+@layer utilities {
+  .pink-glow {
+    box-shadow:
+      0 0 12px oklch(0.56 0.26 350 / 0.5),
+      0 0 32px oklch(0.56 0.26 350 / 0.2);
+  }
+
+  .pink-glow-strong {
+    box-shadow:
+      0 0 20px oklch(0.56 0.26 350 / 0.8),
+      0 0 60px oklch(0.56 0.26 350 / 0.35),
+      inset 0 0 20px oklch(0.56 0.26 350 / 0.05);
+  }
+
+  .pink-pulse {
+    animation: pink-pulse 2s ease-in-out infinite;
+  }
+
+  .fade-in-up {
+    animation: fade-in-up 0.4s ease-out forwards;
+  }
+
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      oklch(0.18 0 0) 25%,
+      oklch(0.24 0 0) 50%,
+      oklch(0.18 0 0) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .mood-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .noise-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+    border-radius: inherit;
+  }
+}
